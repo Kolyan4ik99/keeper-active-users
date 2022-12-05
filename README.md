@@ -3,6 +3,7 @@
 ### Server for storing active IP users list
 
     git clone git@github.com:Kolyan4ik99/keeper-active-users.git
+    cd keeper-active-users
     make
 
 Server listen:
