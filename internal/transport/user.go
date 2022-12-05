@@ -32,5 +32,11 @@ func (u *User) Ping(w http.ResponseWriter, r *http.Request) {
 	}
 
 	log.Printf("Update ip=[%s]\n", ip)
+
+	_, err = w.Write([]byte("{}"))
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	w.WriteHeader(http.StatusOK)
 }
