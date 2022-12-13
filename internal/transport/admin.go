@@ -9,7 +9,7 @@ import (
 )
 
 type AdminService interface {
-	GetUsers(ctx context.Context) ([]*model.User, error)
+	GetUsers(ctx context.Context) ([]model.User, error)
 }
 
 type Admin struct {
@@ -23,12 +23,20 @@ func NewAdmin(adminService AdminService) *Admin {
 func (a *Admin) GetUsers(w http.ResponseWriter, r *http.Request) {
 	users, err := a.adminService.GetUsers(r.Context())
 	if err != nil {
+		w.Write([]byte("{}"))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if len(users) == 0 {
+		w.Write([]byte("{}"))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	msgBytes, err := json.Marshal(users)
 	if err != nil {
+		w.Write([]byte("{}"))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}

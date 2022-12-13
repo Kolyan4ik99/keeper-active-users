@@ -7,7 +7,7 @@ import (
 )
 
 type AdminRepository interface {
-	GetUsers() []*model.User
+	GetUsers() []model.User
 }
 
 type Admin struct {
@@ -18,6 +18,6 @@ func NewAdmin(repo AdminRepository) *Admin {
 	return &Admin{repo: repo}
 }
 
-func (a *Admin) GetUsers(_ context.Context) ([]*model.User, error) {
+func (a *Admin) GetUsers(_ context.Context) ([]model.User, error) {
 	return a.repo.GetUsers(), nil
 }

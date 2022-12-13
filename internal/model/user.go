@@ -11,9 +11,9 @@ type User struct {
 	ExpiryTime time.Time `json:"-"`
 }
 
-func NewUser(ipAddr net.IP, expiryTime time.Duration) *User {
+func NewUser(ipAddr net.IP, expiryTime time.Duration) User {
 	now := time.Now()
-	return &User{
+	return User{
 		IpAddr:     ipAddr,
 		Since:      now.Unix(),
 		ExpiryTime: now.Add(expiryTime),

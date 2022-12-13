@@ -9,15 +9,15 @@ import (
 )
 
 type User struct {
-	users map[string]*model.User // [ip_address : user]
+	users map[string]model.User // [ip_address : user]
 	mu    sync.RWMutex
 }
 
 func NewUser() *User {
-	return &User{users: make(map[string]*model.User)}
+	return &User{users: make(map[string]model.User)}
 }
 
-func (u *User) GetByIP(ip net.IP) (*model.User, bool) {
+func (u *User) GetByIP(ip net.IP) (model.User, bool) {
 	u.mu.RLock()
 	defer u.mu.RUnlock()
 	user, exist := u.users[ip.String()]
@@ -37,10 +37,10 @@ func (u *User) UpdateByIP(ip net.IP, expiryTime time.Duration) {
 	user.ExpiryTime = time.Now().Add(expiryTime)
 }
 
-func (u *User) GetUsers() []*model.User {
+func (u *User) GetUsers() []model.User {
 	u.mu.RLock()
 	defer u.mu.RUnlock()
-	var users []*model.User
+	var users []model.User
 	for _, user := range u.users {
 		users = append(users, user)
 	}

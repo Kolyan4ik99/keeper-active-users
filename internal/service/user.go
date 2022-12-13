@@ -9,7 +9,7 @@ import (
 )
 
 type UserRepository interface {
-	GetByIP(ip net.IP) (*model.User, bool)
+	GetByIP(ip net.IP) (model.User, bool)
 	Save(ip net.IP, expiryTime time.Duration)
 	UpdateByIP(ip net.IP, expiryTime time.Duration)
 }
